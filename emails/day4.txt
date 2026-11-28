@@ -1,0 +1,13 @@
+Subject: a quick example on delivery-app fees
+
+Hi there,
+
+A simple example. Say a restaurant gets 100 orders a month averaging AED 100 each. That is AED 10,000 in sales.
+
+At a 25-35% commission, the apps take AED 2,500 to AED 3,500 of it every month.
+
+Even moving a share of those customers to direct WhatsApp bookings can make a visible difference to what {Restaurant_Name} keeps. Your own numbers will differ, of course.
+
+Happy to run the maths with your real figures if you'd like.
+
+{Sender_Name}

@@ -1,0 +1,29 @@
+EMAIL SEQUENCER - SETUP, TEST, GO LIVE
+
+A) UPLOAD (repo root, keep the folders)
+   .github/workflows/deploy_mailer.yml   mailer.py   settings.json   btg_logo.png (your logo)
+   emails/day1.txt ... day7.txt          leads/your-list.csv
+   Delete the old mailer.py / deploy_mailer.yml / gitact.csv. Never upload state.csv.
+
+B) ONE-TIME CHECKS
+   - GitHub repo > Settings > Secrets and variables > Actions: MY_EMAIL and MY_PASSWORD (Gmail App Password).
+   - Repo > Settings > Actions > General > Workflow permissions: "Read and write permissions".
+   - Read emails/day1..day7.txt and change anything that is not true for your business.
+
+C) TEST (no real restaurants are emailed)
+   1. Actions > Run Email Sequence > Run workflow > dry_run = true  (preview only, sends nothing).
+   2. Real test: move your real list out of leads/, add a CSV with 2-3 of YOUR OWN addresses,
+      run with dry_run = false. Check inbox + spam.
+      Next days: run again with pretend_date = 2026-MM-DD (next day) to receive Day 2, Day 3, ...
+      Reply to one test email, then run with the next pretend_date: that address must stop.
+   3. CLEAN UP: delete state.csv and the test CSV, put your real list back in leads/.
+
+D) GO LIVE
+   Nothing more to do. It wakes up every 15 minutes and sends only inside start_time-end_time
+   on the days set in settings.json (default 13:00-20:00 Dubai, every day, about 3 minutes apart).
+
+E) LATER
+   New restaurants: replace/add a .csv in leads/.  New text: edit emails/dayN.txt.
+   Time, days, daily limit, sender name: settings.json.
+   Pause: Actions > Run Email Sequence > ... > Disable workflow.
+   Do NOT delete state.csv - it remembers who got which email.

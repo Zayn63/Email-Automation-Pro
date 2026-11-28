@@ -1,0 +1,54 @@
+name: Run Email Sequence
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"    # wakes up every 15 minutes (free on a public repo).
+                              # The script itself only sends inside start_time-end_time
+                              # on the days set in settings.json, so you never edit this.
+  workflow_dispatch:           # manual "Run workflow" button (sends right away)
+    inputs:
+      dry_run:
+        description: "Preview only - sends NOTHING (type true to preview)"
+        default: "false"
+      pretend_date:
+        description: "TESTING ONLY - pretend today is this date, YYYY-MM-DD (leave empty normally)"
+        default: ""
+
+permissions:
+  contents: write              # lets the job save state.csv back to the repo
+
+concurrency:
+  group: mailer                # never run two sends at the same time
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run sequencer
+        env:
+          MY_EMAIL: ${{ secrets.MY_EMAIL }}
+          MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
+          DAILY_LIMIT: ${{ vars.DAILY_LIMIT }}      # optional repo variable
+          FORCE_RUN: ${{ github.event_name == 'workflow_dispatch' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
+          TODAY: ${{ github.event.inputs.pretend_date }}
+          PYTHONUNBUFFERED: "1"
+        run: python mailer.py
+
+      - name: Save progress (state.csv)
+        if: always()
+        run: |
+          git config user.name "mailer-bot"
+          git config user.email "mailer-bot@users.noreply.github.com"
+          git add state.csv
+          git diff --cached --quiet || (git commit -m "Update send state [skip ci]" && git pull --rebase && git push)

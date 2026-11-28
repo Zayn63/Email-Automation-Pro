@@ -1,0 +1,14 @@
+{
+  "sender_name": "Sarah",
+  "company_name": "Build To Grow",
+  "company_tagline": "Digital Growth & Technology",
+  "fallback_name": "your restaurant",
+  "timezone": "Asia/Dubai",
+  "start_time": "13:00",
+  "end_time": "20:00",
+  "send_days": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
+  "daily_limit": 500,
+  "day_offsets": null,
+  "min_delay_seconds": 170,
+  "max_delay_seconds": 190
+}

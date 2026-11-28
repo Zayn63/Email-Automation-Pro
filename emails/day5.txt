@@ -1,0 +1,9 @@
+Subject: one question about {Restaurant_Name}
+
+Hi {Restaurant_Name} team,
+
+One quick question: who handles your marketing right now, and is bringing in more direct bookings something you're looking at this quarter?
+
+A one-line answer is plenty. It helps me work out whether what we do is relevant to you at all.
+
+{Sender_Name}
